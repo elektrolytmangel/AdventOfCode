@@ -4,18 +4,14 @@ stages:
 
 compile:
   stage: build
-  tags:
-    - maven
-    - java
+  image: maven
   script:
     - echo "Compile project with maven"
     - mvn compile
 
 unittest:
   stage: test
-  tags:
-    - maven
-    - java
+  image: maven
   script:
     - echo "Testing Project with junit and maven"
     - mvn test
