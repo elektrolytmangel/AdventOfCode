@@ -1,0 +1,22 @@
+stages:
+  - build
+  - test
+
+compile:
+  stage: build
+  tags:
+    - maven
+    - java
+  script:
+    - echo "Compile project with maven"
+    - mvn compile
+
+unittest:
+  stage: test
+  tags:
+    - maven
+    - java
+  script:
+    - echo "Testing Project with junit and maven"
+    - mvn test
+
