@@ -1,18 +1,9 @@
 stages:
-  - build
   - test
 
-compile:
-  stage: build
-  image: maven
-  script:
-    - echo "Compile project with maven"
-    - mvn compile
-
-unittest:
+adventOfCodeResults:
   stage: test
   image: maven
   script:
     - echo "Testing Project with junit and maven"
     - mvn test
-
