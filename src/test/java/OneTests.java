@@ -10,7 +10,7 @@ public class OneTests {
 
     @BeforeAll
     public static void initialize(){
-        System.out.println("***** Code Of Advent: Day One *****");
+        System.out.println("***** Advent Of Code: Day One *****");
         one = new One("src/main/resources/one.txt");
     }
 
