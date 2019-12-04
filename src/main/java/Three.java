@@ -107,17 +107,49 @@ public class Three implements AdventOfCode {
         ArrayList<String> crossPos = new ArrayList<>();
         System.out.println(positionsOne.size());
         System.out.println(positionsTwo.size());
-        String posBefore;
-        String posAfter;
         for (int i = 0; i < positionsOne.size(); i++) {
             String pos = positionsOne.get(i);
             if (positionsTwo.contains(pos)) {
-                int pos2Idx = positionsTwo.indexOf(pos);
-
-                crossPos.add(pos);
+                int idx2 = positionsTwo.indexOf(pos);
+                if (isNotParallel(positionsOne, i, positionsTwo, idx2)){
+                    crossPos.add(pos);
+                }
             }
         }
         return crossPos;
+    }
+
+    public boolean isNotParallel(ArrayList<String> pos1, int idx1, ArrayList<String> pos2, int idx2){
+        String pos1Before = null;
+        String pos1After = null;
+        String pos2Before = null;
+        String pos2After = null;
+        if (idx1 > 0 && idx1 < pos1.size()){
+            pos1Before = pos1.get(idx1 -1 );
+            pos1After = pos1.get(idx1 + 1);
+        }
+        if (idx2 > 0 && idx2 < pos2.size()){
+            pos2Before = pos2.get(idx2 -1 );
+            pos2After = pos2.get(idx2 + 1);
+        }
+
+        if (pos1Before != null && pos1After != null && pos2Before != null && pos2After != null){
+            int xBefore1 = Integer.parseInt(pos1Before.split(",")[0]);
+            int yBefore1 = Integer.parseInt(pos1Before.split(",")[1]);
+            int xAfter1 = Integer.parseInt(pos1After.split(",")[0]);
+            int yAfter1 = Integer.parseInt(pos1After.split(",")[1]);
+
+            int xBefore2 = Integer.parseInt(pos2Before.split(",")[0]);
+            int yBefore2 = Integer.parseInt(pos2Before.split(",")[1]);
+            int xAfter2 = Integer.parseInt(pos2After.split(",")[0]);
+            int yAfter2 = Integer.parseInt(pos2After.split(",")[1]);
+
+            if (xBefore1 == xBefore2 || xBefore1 == xAfter2 || yBefore1 == yBefore2 || yBefore1 == xAfter1 || yAfter1 == yBefore2 || yAfter1 == yAfter2){
+                System.out.println("nop");
+                return false;
+            }
+        }
+        return true;
     }
 
     public int calculateDistanceToZero(String position){
