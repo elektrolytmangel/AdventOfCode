@@ -1,9 +1,0 @@
-stages:
-  - test
-
-adventOfCodeResults:
-  stage: test
-  image: maven
-  script:
-    - echo "Testing Project with junit and maven"
-    - mvn test
