@@ -9,7 +9,7 @@ namespace AdventOfCode.Puzzels
 
         public One()
         {
-            inputValues = this.ReadFile("Input/One.txt").Select(x => int.Parse(x)).ToList();
+            inputValues = this.ReadFile("./Input/One.txt").Select(x => int.Parse(x)).ToList();
         }
 
         public int CalculateSummaryFirst()

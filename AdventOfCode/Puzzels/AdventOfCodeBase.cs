@@ -4,9 +4,13 @@ namespace AdventOfCode.Puzzels
 {
     public abstract class AdventOfCodeBase
     {
+        public string[] InputValues { get; set; }
+
         public virtual string[] ReadFile(string path)
         {
-            return File.ReadAllLines(path);
+            var values = File.ReadAllLines(path);
+            InputValues = values;
+            return values;
         }
     }
 }

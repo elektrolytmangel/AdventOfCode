@@ -1,8 +1,9 @@
 using AdventOfCode.Puzzels;
 using NUnit.Framework;
 
-namespace AdventOfCode
+namespace AdventOfCode.Tests
 {
+    [TestFixture]
     public class OneTests
     {
         [Test]
