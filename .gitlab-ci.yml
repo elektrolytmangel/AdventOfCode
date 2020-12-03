@@ -19,5 +19,4 @@ build:
 test:
     stage: test
     script: 
-        - "cd $proj"
         - "dotnet test"
