@@ -7,8 +7,8 @@ namespace AdventOfCode
         public static void Main(string[] args)
         {
             System.Console.WriteLine("Start adventofcode");
-            var five = new Five("./Input/Five.txt");
-            System.Console.WriteLine(five.Part2());
+            var six = new Six("./Input/Six.txt");
+            System.Console.WriteLine(six.Part2());
         }
     }
 }

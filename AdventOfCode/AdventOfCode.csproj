@@ -28,6 +28,12 @@
     <None Update="Input\One.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Input\Six.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Input\SixTest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Input\Three.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
