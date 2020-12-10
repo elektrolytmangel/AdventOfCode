@@ -34,6 +34,12 @@
     <None Update="Input\SixTest.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Input\Ten.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Input\TenTest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Input\Three.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
