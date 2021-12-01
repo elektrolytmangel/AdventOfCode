@@ -1,14 +1,7 @@
-﻿using AdventOfCode.Puzzels;
+﻿// See https://aka.ms/new-console-template for more information
+using AdventOfCode.Puzzels;
 
-namespace AdventOfCode
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            System.Console.WriteLine("Start adventofcode");
-            var ten = new Ten("./Input/Ten.txt");
-            System.Console.WriteLine(ten.Part2());
-        }
-    }
-}
+Console.WriteLine("AdventOfCode 2021");
+var one = new One("./Input/OneInput.txt");
+one.Part1();
+one.Part2();

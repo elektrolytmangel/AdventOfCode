@@ -1,51 +1,53 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
 namespace AdventOfCode.Puzzels
 {
     public class One : AdventOfCodeBase
     {
-        private IList<int> inputValues;
-
-        public One()
+        public One(string path)
         {
-            inputValues = this.ReadFile("./Input/One.txt").Select(x => int.Parse(x)).ToList();
+            this.ReadFile(path);
         }
 
-        public int CalculateSummaryFirst()
+        public void Part1()
         {
-            foreach(var valOut in inputValues)
+            int count = 0;
+            int before = -1;
+            foreach (var meassure in this.InputValues)
             {
-                foreach (var val in inputValues)
+                if (int.TryParse(meassure, out int m))
                 {
-                    if (val + valOut == 2020)
+                    if (before != -1 && before < m)
                     {
-                        return val * valOut;
+                        count++;
                     }
+
+                    before = m;
                 }
             }
 
-            return 0;
+            Console.WriteLine(count);
         }
 
-        public int CalculateSummarySecond()
+        public void Part2()
         {
-            foreach (var valOut in inputValues)
+            int count = 0;
+            int before = -1;
+            for(int i = 0; i < this.InputValues.Length - 2; i++)
             {
-                foreach (var val in inputValues)
+                int first = int.Parse(this.InputValues[i]);
+                int second = int.Parse((this.InputValues[i + 1]));
+                int third = int.Parse((this.InputValues[i + 2]));
+
+                int currentSum = first + second + third;
+
+                if (before != -1 && before < currentSum)
                 {
-                    foreach(var valInner in inputValues)
-                    {
-                        if ((val + valOut + valInner) == 2020)
-                        {
-                            System.Console.WriteLine($"{val}, {valOut}, {valInner}");
-                            return val * valOut * valInner;
-                        }
-                    }                   
+                    count++;
                 }
+
+                before = currentSum;
             }
 
-            return 0;
+            Console.WriteLine(count);
         }
     }
 }
