@@ -20,13 +20,13 @@ namespace AdventOfCode.Puzzels
                     switch(direction)
                     {
                        case "forward":
-                          horiz + m;
+                          horiz =+m;
                           break;
                        case "down":
-                          depth + m;
+                          depth =+ m;
                           break;
                        case "up":
-                          depth - m;
+                          depth =- m;
                           break;
                     }
 
