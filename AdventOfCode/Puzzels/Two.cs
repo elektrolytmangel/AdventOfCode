@@ -17,49 +17,62 @@ namespace AdventOfCode.Puzzels
                 string meassure = cmd.Split(" ")[1];
                 if (int.TryParse(meassure, out int m))
                 {
-                    switch(direction)
+                    switch (direction)
                     {
-                       case "forward":
-                          horiz =+m;
-                          break;
-                       case "down":
-                          depth =+ m;
-                          break;
-                       case "up":
-                          depth =- m;
-                          break;
+                        case "forward":
+                            horiz += m;
+                            break;
+                        case "down":
+                            depth += m;
+                            break;
+                        case "up":
+                            depth -= m;
+                            break;
                     }
 
-                    
+
                 }
             }
+
             int result = horiz * depth;
             Console.WriteLine(result);
-            
+
             return result;
         }
 
-        public void Part2()
+        public int Part2()
         {
-            int count = 0;
-            int before = -1;
-            for(int i = 0; i < this.InputValues.Length - 2; i++)
+            int depth = 0;
+            int horiz = 0;
+            int aim = 0;
+            foreach (var cmd in this.InputValues)
             {
-                int first = int.Parse(this.InputValues[i]);
-                int second = int.Parse((this.InputValues[i + 1]));
-                int third = int.Parse((this.InputValues[i + 2]));
-
-                int currentSum = first + second + third;
-
-                if (before != -1 && before < currentSum)
+                string direction = cmd.Split(" ")[0];
+                string meassure = cmd.Split(" ")[1];
+                if (int.TryParse(meassure, out int m))
                 {
-                    count++;
-                }
+                    switch (direction)
+                    {
+                        case "forward":
+                            horiz += m;
+                            depth += aim * m;
+                            break;
+                        case "down":
+                            aim += m;
+                            break;
+                        case "up":
+                            aim -= m;
+                            break;
+                    }
 
-                before = currentSum;
+
+                }
             }
 
-            Console.WriteLine(count);
+            int result = horiz * depth;
+            Console.WriteLine(result);
+
+            return result;
         }
     }
 }

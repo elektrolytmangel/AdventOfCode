@@ -7,7 +7,7 @@ namespace AdventOfCode.Puzzels
             this.ReadFile(path);
         }
 
-        public void Part1()
+        public int Part1()
         {
             int count = 0;
             int before = -1;
@@ -25,9 +25,11 @@ namespace AdventOfCode.Puzzels
             }
 
             Console.WriteLine(count);
+
+            return count;
         }
 
-        public void Part2()
+        public int Part2()
         {
             int count = 0;
             int before = -1;
@@ -48,6 +50,8 @@ namespace AdventOfCode.Puzzels
             }
 
             Console.WriteLine(count);
+
+            return count;
         }
     }
 }
