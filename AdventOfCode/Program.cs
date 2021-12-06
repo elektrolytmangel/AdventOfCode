@@ -8,3 +8,6 @@ one.Part2();
 
 var two = new Two("./Input/TwoInput.txt");
 two.Part1();
+
+var six = new Six("./Input/SixInput.txt");
+six.Part1();
