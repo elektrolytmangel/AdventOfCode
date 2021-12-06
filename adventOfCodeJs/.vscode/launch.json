@@ -11,7 +11,16 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\source\\three.js"
+            "program": "${workspaceFolder}/source/three.js"
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Five",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/source/five.js"
         }
     ]
 }
