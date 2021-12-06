@@ -28,10 +28,16 @@ const filerStraightLinesOnly = (array) => {
 function range(start, end) {
   let ans = [];
   // if values are equal not need to change
-  let biggerVal = start > end ? start : end;
-  let smallerVal = start < end ? start : end;
-  for (let i = smallerVal; i <= biggerVal; i++) {
-    ans.push(i);
+  let isIncrement = start < end;
+  if (isIncrement) {
+    for (let i = start; i <= end; i++) {
+      ans.push(i);
+    }
+  }
+  else {
+    for (let i = start; i >= end; i--) {
+      ans.push(i);
+    }
   }
 
   return ans;
@@ -64,7 +70,6 @@ const part1 = () => {
         }
         else {
           usedPositions.push(pos);
-
         }
       }
     }
@@ -74,4 +79,67 @@ const part1 = () => {
   return countIntersects;
 };
 
+const part2 = () => {
+  let parsedInput = parseInputToObject();
+
+  let usedPositions = [];
+  for (let line of parsedInput) {
+    let currentPoint = line.start;
+    let x = currentPoint.x;
+    let y = currentPoint.y;
+    let xDict = usedPositions[x];
+    if (xDict != null) {
+      let yVal = xDict[y];
+      yVal = yVal != null ? ++yVal : 1;
+      xDict[y] = yVal;
+      usedPositions[x] = xDict;
+    }
+    else {
+      let newDict = {};
+      newDict[y] = 1;
+      usedPositions[x] = newDict;
+    }
+    while (currentPoint.x !== line.end.x || currentPoint.y !== line.end.y) {
+      if (currentPoint.x < line.end.x) {
+        currentPoint.x++;
+      } else if (currentPoint.x > line.end.x) {
+        currentPoint.x--;
+      }
+      if (currentPoint.y < line.end.y) {
+        currentPoint.y++;
+      } else if (currentPoint.y > line.end.y) {
+        currentPoint.y--;
+      }
+      let x = currentPoint.x;
+      let y = currentPoint.y;
+      let xDict = usedPositions[x];
+      if (xDict != null) {
+        let yVal = xDict[y];
+        yVal = yVal != null ? ++yVal : 1;
+        xDict[y] = yVal;
+        usedPositions[x] = xDict;
+      }
+      else {
+        let newDict = {};
+        newDict[y] = 1;
+        usedPositions[x] = newDict;
+      }
+    }
+  }
+
+  let countIntersects = 0;
+  for (let point of usedPositions) {
+    for (let key in point) {
+      let value = point[key];
+      if (value > 1) {
+        countIntersects++;
+      }
+    }
+  }
+  console.log(countIntersects);
+  return countIntersects;
+}
+
 part1();
+
+part2();
