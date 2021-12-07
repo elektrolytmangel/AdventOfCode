@@ -65,7 +65,6 @@
                 lanterfishesPoulation.Insert(8, newPopulation);
             }
 
-
             return lanterfishesPoulation.Aggregate((a, b) => a + b);
         }
     }

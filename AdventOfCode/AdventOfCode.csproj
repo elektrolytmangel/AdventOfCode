@@ -11,6 +11,12 @@
 		<None Update="Input\OneInput.txt">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="Input\SevenInput.txt">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Input\SevenInputTest.txt">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="Input\SixInput.txt">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
