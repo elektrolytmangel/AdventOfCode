@@ -11,3 +11,4 @@ two.Part1();
 
 var six = new Six("./Input/SixInput.txt");
 six.Part1();
+six.Part2();
