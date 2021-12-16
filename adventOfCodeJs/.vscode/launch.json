@@ -30,6 +30,15 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/source/four.js"
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Eight",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/source/eight.js"
         }
     ]
 }
