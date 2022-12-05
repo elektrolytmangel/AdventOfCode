@@ -2,8 +2,12 @@ import axios from "axios";
 
 class InputService {
 
-  static async loadInput(day: number) {
-
+  static loadInput(raw: any) {
+    return fetch(raw)
+      .then(r => r.text())
+      .then(t => {
+        return t.split('\n').map(line => line.trim());
+      });
   }
 }
 
