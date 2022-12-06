@@ -36,7 +36,6 @@ const DayThree = () => {
       for (let k = 13; k >= 0; k--) {
         compare.push(stream[i - k]);
       }
-      //const compare = `${stream[i - 3]}${stream[i - 2]}${stream[i - 1]}${stream[i]}`;
 
       let cBefore = '';
       let isUnique = true;
