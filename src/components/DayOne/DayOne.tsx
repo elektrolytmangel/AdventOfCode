@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useInput from '../../hooks/useInput';
 import raw from '../../puzzels/input1.txt';
 

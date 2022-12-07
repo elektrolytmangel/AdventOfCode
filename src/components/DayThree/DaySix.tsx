@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import useInput from '../../hooks/useInput';
-import raw from '../../puzzels/input3.txt';
+import raw from '../../puzzels/input6.txt';
 
-const DayThree = () => {
+const DaySix = () => {
   const { input } = useInput(raw);
   const [part1Result, setPart1Result] = useState<any>();
   const [part2Result, setPart2Result] = useState<any>();
@@ -75,4 +75,4 @@ const DayThree = () => {
   );
 }
 
-export default DayThree;
+export default DaySix;

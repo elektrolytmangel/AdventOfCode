@@ -4,7 +4,8 @@ import Start from './components/Start/Start';
 import DayOne from './components/DayOne/DayOne';
 import Navbar from './components/Navbar/Navbar';
 import DayTwo from './components/DayTwo/DayTwo';
-import DayThree from './components/DayThree/DayThree';
+import DaySix from './components/DayThree/DaySix';
+import DaySeven from './components/DaySeven/DaySeven';
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
           <Route path="/" element={<Start />} />
           <Route path="/01" element={<DayOne />} />
           <Route path="/02" element={<DayTwo />} />
-          <Route path="/03" element={<DayThree />} />
+          <Route path="/06" element={<DaySix />} />
+          <Route path="/07" element={<DaySeven />} />
         </Routes>
       </BrowserRouter>
     </div>
