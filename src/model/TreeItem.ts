@@ -1,5 +1,3 @@
-import { resourceLimits } from "worker_threads";
-
 class TreeItem {
   parent: TreeItem | null = null;
   children: TreeItem[] = [];

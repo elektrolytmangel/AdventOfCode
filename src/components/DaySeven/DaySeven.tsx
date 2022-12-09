@@ -1,115 +1,31 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FaFolder, FaRegFileVideo } from "react-icons/fa";
+import useFileSystem from "../../hooks/useFileSystem";
 import useInput from "../../hooks/useInput";
+import DirectoryInfo from "../../model/DirectoryInfo";
 import TreeItem from "../../model/TreeItem";
 import raw from '../../puzzels/input7.txt';
-import rawTest from '../../puzzels/input7test.txt';
-import { FaFolder, FaRegFileVideo } from "react-icons/fa";
-import { max } from "rxjs";
 
-let someSize: number = 0;
-// 1 339 166, 1 243 729?
 const DaySeven = () => {
   const { input } = useInput(raw);
-  const { input: inputTest } = useInput(rawTest);
+  const { root, directories } = useFileSystem(input);
   const [part1Result, setPart1Result] = useState<number>(0);
   const [part2Result, setPart2Result] = useState<number>(0);
-  const [rootTree, setRootTree] = useState<TreeItem>(new TreeItem('/', false));
-  const [totalSize, setTotalSize] = useState<number>(0);
   const [state, setState] = useState<any>({});
+  const [cwd, setCwd] = useState<TreeItem>(root);
 
-  const calculateItem = (item: TreeItem): number => {
-    let size = 0;
-    const files = item.children.map(x => { if (x.children.length === 0) { return x; } });
-    const dirs = item.children.map(x => { if (x.children.length > 0) { return x; } });
-    for (const f of files) {
-      size += f?.size ?? 0;
-    }
-
-    for (const d of dirs) {
-      if (d !== undefined) {
-        size += calculateItem(d);
+  const part1 = (directories: DirectoryInfo[]) => {
+    let resultSize = 0;
+    directories.forEach(x => {
+      if (x.size < 100000) {
+        resultSize += x.size;
       }
-    }
+    });
 
-    if (size < 100000 && item.children.length > 0) {
-      someSize += size;
-    }
-
-    item.size = size;
-    return size;
+    setPart1Result(resultSize);
   }
 
-  const part1 = (input: string[]) => {
-    let currentDirectory: TreeItem = new TreeItem('/', false);
-
-    for (const l of input) {
-      const parts = l.split(' ');
-      if (l.startsWith('$')) { // is cmd?
-        // ignore ls
-        if (parts.length === 3) {
-          // $ cd x
-          // $ cd ..
-          if (parts[2] === '..') {
-            // navigate outside
-            currentDirectory = currentDirectory.parent ?? currentDirectory;
-          }
-          else { // cd
-            // navigate in directory         
-            currentDirectory = currentDirectory.children.find(x => x.name === parts[2]) ?? currentDirectory;
-          }
-        }
-      }
-      else {
-        if (l.startsWith('dir')) {
-          // add new directory
-          const existing = currentDirectory.children.find(x => x.name === parts[1]);
-          if (existing === undefined) {
-            const dir = new TreeItem(parts[1], false);
-            dir.parent = currentDirectory;
-            currentDirectory?.children.push(dir);
-          }
-        } else {
-          const file = new TreeItem(parts[1], true);
-          file.size = parseInt(parts[0]);
-          file.parent = currentDirectory;
-          currentDirectory?.children.push(file);
-        }
-      }
-    }
-
-    // navigate to root
-    while (currentDirectory.parent !== null) {
-      currentDirectory = currentDirectory.parent;
-    }
-
-    //calculateItem(currentDirectory);
-    setRootTree(currentDirectory);
-    console.log(currentDirectory);
-  }
-
-  const flatenTree = (item: TreeItem): TreeItem[] => {
-    const result: TreeItem[] = [];
-    for (const c of item.children) {
-      if (c.children.length > 0) {
-        const subResult = flatenTree(c);
-        result.push(...subResult);
-      }
-    }
-
-    if (item.children.length > 0) {
-      item.children.forEach(x => x.children = []);
-      item.parent = null;
-      result.push(...item.children);
-      result.push(item);
-    }
-    return result;
-  }
-
-  const part2 = (rootTree: TreeItem, totalSize: number) => {
-    let items: TreeItem[] = [];
-
-    items = flatenTree(rootTree);
-
+  const part2 = (directories: DirectoryInfo[], totalSize: number) => {
     const maxSize = 70000000; // 70 000 000
     const neededFreeSize = 30000000; // 30 000 000
     const currentFreeSize = maxSize - totalSize;
@@ -117,49 +33,66 @@ const DaySeven = () => {
 
     setState({ totalSize, maxSize, neededFreeSize, currentFreeSize, needToFreeUp });
 
-    const result = items.sort((a, b) => a.size - b.size).filter(x => !x.isFile && x.size >= needToFreeUp)[0];
-    console.log(result)
+    const result = directories.sort((a, b) => a.size - b.size).filter(x => x.size >= needToFreeUp)[0];
     if (result !== undefined) {
       setPart2Result(result.size);
     }
   }
 
-  useEffect(() => {
-    someSize = 0;
-    setPart1Result(0);
-    const result = calculateItem(rootTree);
-    setTotalSize(result);
-    setPart1Result(someSize);
-  }, [rootTree]);
+  const changeDir = (dir: TreeItem, name: string) => {
+    const changeTo = dir.children.find(x => x.name === name);
+    if (changeTo !== undefined) {
+      setCwd(changeTo)
+    }
+  }
+
+  const goBack = (dir: TreeItem) => {
+    if (dir.parent !== null) {
+      setCwd(dir.parent);
+    }
+  }
+
+  const renderBackButton = (dir: TreeItem) => {
+    {
+      if (dir.parent) {
+        return (
+          <button onClick={() => goBack(dir)} className="button secondary tiny">back</button>
+        )
+      }
+    }
+  }
 
   const renderTree = (item: TreeItem) => {
     return (
-      <>
-        <p><FaFolder /> {item.name} {item.size}</p>
-        {item.children.map(x => {
-          if (x.children.length == 0) {
-            return <div><p><FaRegFileVideo /> {x.size} {x.name}</p></div>
-          }
-          else {
-            return (
-              <ul>
-                {renderTree(x)}
-              </ul>
-            )
-          }
-        })}
-      </>
+      <div key={`${item.name}${item.size}`}>
+        <p><FaFolder /> {item.name} <span style={{ fontSize: '0.8rem' }}>{item.size}</span> {renderBackButton(item)}</p>
+        <ul >
+          {item.children.sort((a, b) => a.isFile == b.isFile ? 0 : 1).map(x => {
+            if (x.isFile) {
+              return <div key={`${x.name}${x.size}`} ><p><FaRegFileVideo /> {x.name} <span style={{ fontSize: '0.8rem' }}>{x.size}</span></p></div>
+            }
+            else {
+              return (
+                <div key={`${x.name}${x.size}`} >
+                  <button onClick={() => changeDir(item, x.name)} className="button secondary"><FaFolder /> {x.name} <span style={{ fontSize: '0.8rem' }}>{x.size}</span> </button>
+                </div>
+              )
+            }
+          })}
+        </ul>
+      </div >
     )
   }
+
+  useEffect(() => {
+    part1(directories);
+    part2(directories, root.size);
+  }, [directories, root]);
 
   return (
     <>
       <div className="grid-x">
         <h1 >Day 07</h1>
-        <button onClick={() => part1(inputTest)} className="button success">Part1 Test</button>
-        <button onClick={() => part1(input)} className="button success">Part1</button>
-        <button onClick={() => part2(rootTree, totalSize)} className="button success">Part2</button>
-        <button onClick={() => setRootTree(new TreeItem('/', false))} className="button alert">Clear</button>
       </div>
       <div>
         <p>Input containing {input.length} lines</p>
@@ -167,7 +100,9 @@ const DaySeven = () => {
         <p>Part2 <strong>{part2Result}</strong></p>
         <p>{JSON.stringify(state)}</p>
       </div>
-      {renderTree(rootTree)}
+      <h1>Browse File System</h1>
+      <button onClick={() => { setCwd(root) }} className="button">Init File System</button>
+      {renderTree(cwd)}
     </>
   );
 }
