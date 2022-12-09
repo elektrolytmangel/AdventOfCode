@@ -1,5 +1,3 @@
-import axios from "axios";
-
 class InputService {
 
   static loadInput(raw: any) {
@@ -11,5 +9,4 @@ class InputService {
   }
 }
 
-// session=process.env.REACT_APP_AOC_SESSION
 export default InputService;

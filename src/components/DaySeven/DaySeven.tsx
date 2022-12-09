@@ -53,12 +53,10 @@ const DaySeven = () => {
   }
 
   const renderBackButton = (dir: TreeItem) => {
-    {
-      if (dir.parent) {
-        return (
-          <button onClick={() => goBack(dir)} className="button secondary tiny">back</button>
-        )
-      }
+    if (dir.parent) {
+      return (
+        <button onClick={() => goBack(dir)} className="button secondary tiny">back</button>
+      )
     }
   }
 
@@ -67,7 +65,7 @@ const DaySeven = () => {
       <div key={`${item.name}${item.size}`}>
         <p><FaFolder /> {item.name} <span style={{ fontSize: '0.8rem' }}>{item.size}</span> {renderBackButton(item)}</p>
         <ul >
-          {item.children.sort((a, b) => a.isFile == b.isFile ? 0 : 1).map(x => {
+          {item.children.sort((a, b) => a.isFile === b.isFile ? 0 : 1).map(x => {
             if (x.isFile) {
               return <div key={`${x.name}${x.size}`} ><p><FaRegFileVideo /> {x.name} <span style={{ fontSize: '0.8rem' }}>{x.size}</span></p></div>
             }
